@@ -3,8 +3,6 @@ async function getStats() {
   const res = await fetch(`${apiUrl}/todos`);
   const todos = await res.json();
 
-  console.log("Fetching stats from API:", apiUrl);
-
   return {
     total: todos.length,
     completed: todos.filter((todo: any) => todo.completed).length,
