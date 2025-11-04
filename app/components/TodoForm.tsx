@@ -7,7 +7,6 @@ export default function TodoForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("新しいTODOを追加:", title);
     setTitle("");
   };
 
