@@ -7,18 +7,7 @@ import ServerStats from "./components/ServerStats";
 import SlowComponent from "./components/SlowComponent";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { ErrorTrigger } from "./components/ErrorTrigger";
-
-async function getTodos() {
-  const apiUrl = process.env.API_BASE_URL;
-
-  const res = await fetch(`${apiUrl}/todos?_limit=5`);
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch todos");
-  }
-
-  return res.json();
-}
+import { getTodos } from "./lib/data";
 
 function LoadingSkeleton() {
   return (

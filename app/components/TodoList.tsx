@@ -1,6 +1,7 @@
 "use client"; // use client directive がないと、ランタイムでどうなるかを確認する => build error が発生する。Production ではデプロイする前に気付けるはず。
 
 import { useState } from "react";
+import TodoItem from "./TodoItem";
 
 type Todo = {
   id: number;
@@ -22,14 +23,6 @@ export default function TodoList({ initialTodos }: Props) {
     if (filter === "completed") return todo.completed;
     return true;
   });
-
-  const toggleTodo = (id: number) => {
-    setTodos((todos) =>
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
-  };
 
   return (
     <div>
@@ -63,20 +56,12 @@ export default function TodoList({ initialTodos }: Props) {
 
       <ul className="space-y-2">
         {filteredTodos.map((todo) => (
-          <li
+          <TodoItem
             key={todo.id}
-            className="p-3 bg-gray-100 rounded flex items-center gap-2"
-          >
-            <input
-              type="checkbox"
-              checked={todo.completed}
-              onChange={() => toggleTodo(todo.id)}
-              className="w-5 h-5"
-            />
-            <span className={todo.completed ? "line-through" : ""}>
-              {todo.title}
-            </span>
-          </li>
+            id={todo.id}
+            title={todo.title}
+            completed={todo.completed}
+          />
         ))}
       </ul>
     </div>

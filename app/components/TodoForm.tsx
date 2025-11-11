@@ -1,24 +1,22 @@
-"use client"; // TODO: use client directive がないと、ランタイムでどうなるかを確認する
+"use client";
 
-import { useState } from "react";
+import { useActionState } from "react";
+import { createTodoAction } from "../actions/todo-actions";
 
 export default function TodoForm() {
-  const [title, setTitle] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setTitle("");
-  };
+  const [state, formAction] = useActionState(createTodoAction, {
+    success: false,
+  });
 
   return (
-    <form onSubmit={handleSubmit} className="mb-6">
+    <form action={formAction} className="mb-6">
       <div className="flex gap-2">
         <input
           type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          name="title"
           placeholder="新しいTODOを入力"
           className="flex-1 px-4 py-2 border rounded"
+          required
         />
         <button
           type="submit"
@@ -27,6 +25,10 @@ export default function TodoForm() {
           追加
         </button>
       </div>
+
+      {state?.errorMessage && (
+        <p className="mt-2 text-red-500">{state.errorMessage}</p>
+      )}
     </form>
   );
 }
